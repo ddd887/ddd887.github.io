@@ -1,1 +1,1 @@
-[{"id":"53564643197186a30bf1d844fb5f7565","title":"Namp的使用","content":"Namp原理nmap向所在网段发送大量ARP请求广播，如果目标主机存活，则会收到ARP响应，若一段时间后没有收到相应，则认为主机死亡。\n","slug":"Namp使用教程","date":"2022-04-14T07:18:15.522Z","categories_index":"","tags_index":"","author_index":"Aurora"}]
+[{"id":"53564643197186a30bf1d844fb5f7565","title":"Namp的使用","content":"Namp原理nmap向所在网段发送大量ARP请求广播，如果目标主机存活，则会收到ARP响应，若一段时间后没有收到相应，则认为主机死亡。\n","slug":"Namp使用教程","date":"2022-04-14T07:18:15.522Z","categories_index":"","tags_index":"内网渗透工具","author_index":"DWY"}]
