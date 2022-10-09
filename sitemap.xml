@@ -4,7 +4,16 @@
   <url>
     <loc>https://ddd887.github.io/archives/4a17b156.html</loc>
     
-    <lastmod>2022-10-07</lastmod>
+    <lastmod>2022-10-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ddd887.github.io/categories/index.html</loc>
+    
+    <lastmod>2022-10-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,7 +22,7 @@
   <url>
     <loc>https://ddd887.github.io/archives/be82d226.html</loc>
     
-    <lastmod>2022-10-07</lastmod>
+    <lastmod>2022-10-09</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -21,15 +30,6 @@
   
   <url>
     <loc>https://ddd887.github.io/link/index.html</loc>
-    
-    <lastmod>2022-10-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ddd887.github.io/categories/index.html</loc>
     
     <lastmod>2022-10-05</lastmod>
     
@@ -49,12 +49,19 @@
 
   <url>
     <loc>https://ddd887.github.io/</loc>
-    <lastmod>2022-10-07</lastmod>
+    <lastmod>2022-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
 
+  
+  <url>
+    <loc>https://ddd887.github.io/categories/vulhub/</loc>
+    <lastmod>2022-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>
