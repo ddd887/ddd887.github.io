@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>pikachu靶场通关秘籍之SQL</title>
+      <link href="/archives/c4c569e3.html"/>
+      <url>/archives/c4c569e3.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Sql-Inject-SQL注入-介绍"><a href="#Sql-Inject-SQL注入-介绍" class="headerlink" title="Sql Inject(SQL注入)介绍"></a>Sql Inject(SQL注入)介绍</h2><pre><code>在owasp发布的top10排行榜里，注入漏洞一直是危害排名第一的漏洞，其中注入漏洞里面首当其冲的就是数据库注入漏洞。**一个严重的SQL注入漏洞，可能会直接导致一家公司破产！SQL注入漏洞主要形成的原因是在数据交互中，前端的数据传入到后台处理时，没有做严格的判断，导致其传入的“数据”拼接到SQL语句中后，被当作SQL语句的一部分执行。 从而导致数据库受损（被脱裤、被删除、甚至整个服务器权限沦陷）。在构建代码时，一般会从如下几个方面的策略来防止SQL注入漏洞：1.对传进SQL语句里面的变量进行过滤，不允许危险字符传入；2.使用参数化（Parameterized Query 或 Parameterized Statement）；3.还有就是,目前有很多ORM框架会自动使用参数化解决注入问题,但其也提供了&quot;拼接&quot;的方式,所以使用时需要慎重! SQL注入在网络上非常热门，也有很多技术专家写过非常详细的关于SQL注入漏洞的文章，这里就不在多写了。  </code></pre><h2 id="数字型注入-post"><a href="#数字型注入-post" class="headerlink" title="数字型注入(post)"></a>数字型注入(post)</h2><p>第一关，选择查询的id然后点击查询就能查询到数据，这时候我对查询进行抓包。<br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73l9dfryxj311b0j7q42.jpg" alt="1">  </p><p>右键 <em>Send to Repeater</em><br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73lbmqtc0j30rp0o60u0.jpg" alt="2">  </p><p>我们在id这块进行测试，在后面添加 or 1&#x3D;1 发现有注入点:<br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73ld0gf00j30rf0m9acr.jpg" alt="3">  </p><h2 id="字符型注入-get"><a href="#字符型注入-get" class="headerlink" title="字符型注入(get)"></a>字符型注入(get)</h2><p>输入想查找的东西，点击查询进行查找,这边我们直接在输入框中进行测试,和上题一样输入 <strong>lili or 1&#x3D;1#</strong>,发现有注入点：<br><img src="https://tva4.sinaimg.cn/large/007dA9Dely8h73lfanouwj30p30mfgm0.jpg" alt="4"></p><h2 id="xx型注入"><a href="#xx型注入" class="headerlink" title="xx型注入"></a>xx型注入</h2><p>和上题一样 ，输入**lili\**破坏其内部数据库语句结构<br><img src="https://tva4.sinaimg.cn/large/007dA9Dely8h73lh9srmhj30r60itq34.jpg" alt="5"><br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73lhehuf9j317w09idg8.jpg" alt="6">  </p><h2 id="“insert-x2F-update”注入"><a href="#“insert-x2F-update”注入" class="headerlink" title="“insert&#x2F;update”注入"></a>“insert&#x2F;update”注入</h2><p>这边我们点击<strong>注册</strong>，在用户栏进行注入。payload为:<strong>1’ and extractvalue(1,concat(0x7e,database())) and ‘</strong><br><img src="https://tva2.sinaimg.cn/large/007dA9Dely8h73lk5ra9ij30se0esdge.jpg" alt="7"><br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73lkauiioj30g4089wej.jpg" alt="8">  </p><h2 id="“delete”注入"><a href="#“delete”注入" class="headerlink" title="“delete”注入"></a>“delete”注入</h2><p>这里是一个留言板，我们随便写一点东西进去，鼠标移到 <em>删除</em> 在左下角可以看到<strong>id&#x3D;60</strong>,说明我们的数据是有id头的，所以点击删除抓包。<br><img src="https://tva2.sinaimg.cn/large/007dA9Dely8h73lnqpwkpj30tm0p30ur.jpg" alt="9"><br>我们在id&#x3D;60后面注入即可：<br><img src="https://tva2.sinaimg.cn/large/007dA9Dely8h73lowua6mj30yi0m5t9l.jpg" alt="10"><br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73loaxd9gj30yl0o340g.jpg" alt="11">  </p><h2 id="“http-header”注入"><a href="#“http-header”注入" class="headerlink" title="“http header”注入"></a>“http header”注入</h2><p>有些时候，后台开发人员为了验证客户端头信息，比如常用的cookie验证，或者通过http请求头信息获取客户端的一些信息，比如useragent、accept字段等等，会对客户端的http请求头信息获取并使用sql进行处理，如果此时没有足够的安全考虑，则可能会导致基于http头的sql注入漏洞  </p><p>首先，我们点击 <em>点击退出</em> 抓包<br><img src="https://tva4.sinaimg.cn/large/007dA9Dely8h73lqzgpwjj31k40nuq4u.jpg" alt="12">  </p><p>在<strong>User-Agent</strong>进行注入,payload为<strong>1’ and extractvalue(1,concat(0x7e,database())) and ‘</strong><br><img src="https://tva1.sinaimg.cn/large/007dA9Dely8h73ltkb9rbj30yg0m5jsm.jpg" alt="13">  </p><h2 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h2><p>时间盲注主要使用if语句，通过延迟信息进行判断，不看回显信息，这里就不多说了，使用SQLMAP效果更佳，手动测试难免有误差。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> pikachu </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> pikachu </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>pikachu靶场通关秘籍之CSRF</title>
       <link href="/archives/f3a6c1ad.html"/>
       <url>/archives/f3a6c1ad.html</url>
