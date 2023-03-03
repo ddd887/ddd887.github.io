@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>dedecms后台拿webshell</title>
+      <link href="/archives/226c5523.html"/>
+      <url>/archives/226c5523.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h2><p>我们用弱口令爆破，将账号和密码穷举出来。<br>账号：admin 密码：123456<br><img src="https://pic.888888.al/i/2023/03/03/k0eljh.jpg" alt="0"></p><h2 id="方法一：文件上传"><a href="#方法一：文件上传" class="headerlink" title="方法一：文件上传"></a>方法一：文件上传</h2><p>我们进入到<strong>核心-&gt;文件上传</strong>这个位置，直接上传带有木马的文件。<br><img src="https://pic.888888.al/i/2023/03/03/k1640o.jpg" alt="1"><br><strong>上传成功!</strong><br><img src="https://pic.888888.al/i/2023/03/03/k1ovue.jpg" alt="2"></p><h2 id="方法二：修改模块文件"><a href="#方法二：修改模块文件" class="headerlink" title="方法二：修改模块文件"></a>方法二：修改模块文件</h2><p>进入<strong>模板-&gt;index.html</strong>，点击修改。<br><img src="https://pic.888888.al/i/2023/03/03/k2zamn.jpg" alt="3"><br>加入我们的payload。<br><img src="https://pic.888888.al/i/2023/03/03/k3jzmv.jpg" alt="4"><br>修改成功后，我们到生成这个界面，将主页位置中文件的后缀改为.php，然后更新主页。<br><img src="https://pic.888888.al/i/2023/03/03/k4tbbv.jpg" alt="5"><br>点击游览，上床成功！<br><img src="https://pic.888888.al/i/2023/03/03/k59nf3.jpg" alt="6"></p><h2 id="方法三：后台任意命令执行"><a href="#方法三：后台任意命令执行" class="headerlink" title="方法三：后台任意命令执行"></a>方法三：后台任意命令执行</h2><p>在dedecms后台广告管理，可以插入php任意代码。<br><img src="https://pic.888888.al/i/2023/03/03/k62oyl.jpg" alt="7"></p><p>点击增加一个广告位，在广告内容写入payload。<br><img src="https://pic.888888.al/i/2023/03/03/k729bl.jpg" alt="8"></p><p>用中国菜刀尝试连接，连接成功。<br><img src="https://pic.888888.al/i/2023/03/03/k7mvvc.jpg" alt="9"><br><img src="https://pic.888888.al/i/2023/03/03/k7q9cr.jpg" alt="10"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> webshell </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> webshell </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>wordpress后台拿webshell</title>
       <link href="/archives/0.html"/>
       <url>/archives/0.html</url>
