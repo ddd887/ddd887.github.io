@@ -4,13 +4,25 @@
   
     
     <entry>
-      <title></title>
+      <title>wordpress后台拿webshell</title>
       <link href="/archives/0.html"/>
       <url>/archives/0.html</url>
       
-        <content type="html"><![CDATA[<hr><p>title:wordpress后台拿webshell<br>data:’2023-3-2 18:13’<br>description:webshell<br>cover:’<a href="https://pic.888888.al/i/2023/03/03/f4uog8.jpg&#39;">https://pic.888888.al/i/2023/03/03/f4uog8.jpg&#39;</a><br>categories:webshell<br>tag:webshell</p><hr><h2 id="弱口令爆破"><a href="#弱口令爆破" class="headerlink" title="弱口令爆破"></a>弱口令爆破</h2><p>首先我们通过弱口令爆破拿到wordpress的账号和密码。</p><p>账号：admin 密码：123456</p><p><img src="https://pic.888888.al/i/2023/03/03/faajzy.jpg" alt="1"></p><h2 id="方法一：模板编辑"><a href="#方法一：模板编辑" class="headerlink" title="方法一：模板编辑"></a>方法一：模板编辑</h2><p>我们到外观-&gt;编辑这个模块，选择404模板，在404.php中写入php一句话木马。</p><p>点击更新文件<br><img src="https://pic.888888.al/i/2023/03/03/f975wn.jpg" alt="2"></p><p>我们可以看到在服务器后台的404.php文件中确实被我们写入了一句话木马了。<br><img src="https://pic.888888.al/i/2023/03/03/fbjwmd.jpg" alt="3"></p><p>我们妨问404.php并且用蚁剑尝试连接。<br><img src="https://pic.888888.al/i/2023/03/03/fcj0i9.jpg" alt="4"><br>连接成功！<br><img src="https://pic.888888.al/i/2023/03/03/fdub1b.jpg" alt="5"></p><h2 id="方法二：上传主题"><a href="#方法二：上传主题" class="headerlink" title="方法二：上传主题"></a>方法二：上传主题</h2><p>我们进入到外观-&gt;主题界面，将带有木马的文件写入主题中，再上传上去。<br><img src="https://pic.888888.al/i/2023/03/03/im4sz3.jpg" alt="6"></p><p>点击上传<br><img src="https://pic.888888.al/i/2023/03/03/inlh77.jpg" alt="7"><br>妨问这个主题中带有木马的文件<br><img src="https://pic.888888.al/i/2023/03/03/io7o4c.jpg" alt="8"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>模板编辑拿webshell</strong></p><p>通过修改模块写入一句话，网站再调用模板的时，会自动加载这个模板，运行后门。<br><strong>文件上传拿webshell</strong></p><p>通过后台的上传模块，上传网页后门，就可以拿到webshell。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="弱口令爆破"><a href="#弱口令爆破" class="headerlink" title="弱口令爆破"></a>弱口令爆破</h2><p>首先我们通过弱口令爆破拿到wordpress的账号和密码。</p><p>账号：admin 密码：123456</p><p><img src="https://pic.888888.al/i/2023/03/03/faajzy.jpg" alt="1"></p><h2 id="方法一：模板编辑"><a href="#方法一：模板编辑" class="headerlink" title="方法一：模板编辑"></a>方法一：模板编辑</h2><p>我们到外观-&gt;编辑这个模块，选择404模板，在404.php中写入php一句话木马。</p><p>点击更新文件<br><img src="https://pic.888888.al/i/2023/03/03/f975wn.jpg" alt="2"></p><p>我们可以看到在服务器后台的404.php文件中确实被我们写入了一句话木马了。<br><img src="https://pic.888888.al/i/2023/03/03/fbjwmd.jpg" alt="3"></p><p>我们妨问404.php并且用蚁剑尝试连接。<br><img src="https://pic.888888.al/i/2023/03/03/fcj0i9.jpg" alt="4"><br>连接成功！<br><img src="https://pic.888888.al/i/2023/03/03/fdub1b.jpg" alt="5"></p><h2 id="方法二：上传主题"><a href="#方法二：上传主题" class="headerlink" title="方法二：上传主题"></a>方法二：上传主题</h2><p>我们进入到外观-&gt;主题界面，将带有木马的文件写入主题中，再上传上去。<br><img src="https://pic.888888.al/i/2023/03/03/im4sz3.jpg" alt="6"></p><p>点击上传<br><img src="https://pic.888888.al/i/2023/03/03/inlh77.jpg" alt="7"><br>妨问这个主题中带有木马的文件<br><img src="https://pic.888888.al/i/2023/03/03/io7o4c.jpg" alt="8"></p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>模板编辑拿webshell</strong></p><p>通过修改模块写入一句话，网站再调用模板的时，会自动加载这个模板，运行后门。<br><strong>文件上传拿webshell</strong></p><p>通过后台的上传模块，上传网页后门，就可以拿到webshell。</p>]]></content>
       
       
+      <categories>
+          
+          <category> webshell </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> webshell </tag>
+            
+        </tags>
       
     </entry>
     
