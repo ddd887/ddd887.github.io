@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>KindEditor文件上传漏洞</title>
+      <link href="/archives/afb5413b.html"/>
+      <url>/archives/afb5413b.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本⽂章仅供学习交流使⽤，请勿将⽂中所描述内容⽤于违法犯罪⾏为。</p><h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>对该网站进行目录爆破 发现 <strong>&#x2F;upload</strong> 响应为200，妨问该目录，发现是一个空白页面<br><img src="https://pic.888888.al/i/2023/08/15/115jqda.png" alt="0"></p><p>对该网站进行抓包，发现<strong>KindEditor</strong>字样，百度可知，KindEditor编辑器可执行html文件，在请求包中构造html文件，尝试上传。<br><img src="https://pic.888888.al/i/2023/08/15/11a6w9l.png" alt="1"></p><p>上传成功，并返回文件保存路径。<br><img src="https://pic.888888.al/i/2023/08/15/11b6vli.png" alt="2"></p><p>妨问该路径，html文件被执行。<br><img src="https://pic.888888.al/i/2023/08/15/11brvmy.png" alt="3"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 渗透测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 渗透测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JAVA反序列化漏洞基础</title>
       <link href="/archives/5a428c68.html"/>
       <url>/archives/5a428c68.html</url>
