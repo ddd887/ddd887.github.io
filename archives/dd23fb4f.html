@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>PKCS填充方式 | 是苹果啊</title><meta name="keywords" content="思考与总结"><meta name="author" content="是苹果啊"><meta name="copyright" content="是苹果啊"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="PKCS填充方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PKCS填充方式">
+<meta property="og:url" content="https://ddd887.github.io/archives/dd23fb4f.html">
+<meta property="og:site_name" content="是苹果啊">
+<meta property="og:description" content="PKCS填充方式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic.888888.al/i/2024/11/07/p2nb78.jpg">
+<meta property="article:published_time" content="2024-11-07T06:20:48.206Z">
+<meta property="article:modified_time" content="2024-11-07T07:41:38.456Z">
+<meta property="article:author" content="是苹果啊">
+<meta property="article:tag" content="思考与总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.888888.al/i/2024/11/07/p2nb78.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://ddd887.github.io/archives/dd23fb4f"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-zuJFBZJSKG"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PKCS填充方式',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-07 15:41:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/constown/HexoCustomFile@0.0.4/dist/css/custom.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://pic.888888.al/i/2023/08/15/qn7803.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://pic.888888.al/i/2024/11/07/p2nb78.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">是苹果啊</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">PKCS填充方式</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-07T06:20:48.206Z" title="发表于 2024-11-07 14:20:48">2024-11-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-07T07:41:38.456Z" title="更新于 2024-11-07 15:41:38">2024-11-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">思考与总结</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="PKCS填充方式"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="终端编号"><a href="#终端编号" class="headerlink" title="终端编号"></a>终端编号</h1><p>终端编号（Terminal ID，简称 TID）在金融支付系统中是用于唯一标识 POS 终端、ATM 终端或其他支付设备的编号。终端编号的长度可以根据系统设计和地区标准的不同有所变化，但在大多数情况下，终端编号一般是 8 位到 15 位。</p>
+<h2 id="终端编号的常见位数："><a href="#终端编号的常见位数：" class="headerlink" title="终端编号的常见位数："></a>终端编号的常见位数：</h2><ol>
+<li><p>8 位：这是在大多数支付系统中常见的终端编号长度，尤其是在 POS 机中。许多金融机构、支付网关和服务商会使用 8 位的编号来唯一标识每个支付终端设备。</p>
+<p>○ 例子：12345678</p>
+</li>
+<li><p>12 位到 15 位：在一些系统中，尤其是较为复杂的支付系统或者有多个分支机构的场景下，终端编号可能会更长，以提供更多的唯一标识符。这在需要更多细粒度控制和管理的支付网络中较为常见。</p>
+<p>○ 例子：123456789012（12位）、123456789012345（15位）</p>
+</li>
+</ol>
+<h2 id="终端编号的构成："><a href="#终端编号的构成：" class="headerlink" title="终端编号的构成："></a>终端编号的构成：</h2><p><strong>●</strong> 前几位：在一些系统中，终端编号的前几位可能代表某些特定的标识信息，如区域代码、分支机构编号等。</p>
+<p><strong>●</strong> 后几位：通常用于唯一标识特定的终端设备。</p>
+<h2 id="不同支付系统的情况："><a href="#不同支付系统的情况：" class="headerlink" title="不同支付系统的情况："></a>不同支付系统的情况：</h2><p><strong>●</strong> POS 机：POS 终端编号一般为 8 位，但某些支付平台可能使用 12 位或更长的终端编号。</p>
+<p><strong>●</strong> ATM 机：ATM 终端编号通常也是 8 位到 12 位，具体取决于银行或支付服务提供商的规定。</p>
+<p><strong>●</strong> 在线支付网关：一些线上支付网关可能会使用更长的编号以支持更复杂的系统。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p><strong>●</strong> 终端编号一般为 8 位，但根据系统设计和需求，可能会有 12 位到 15 位的情况。具体长度取决于支付系统或服务提供商的设计规范。</p>
+<h2 id="为什么是8位，不可以是9位，10位吗"><a href="#为什么是8位，不可以是9位，10位吗" class="headerlink" title="为什么是8位，不可以是9位，10位吗"></a>为什么是8位，不可以是9位，10位吗</h2><p>ChatGPT 说：</p>
+<p>终端编号（Terminal ID, TID）的长度通常由系统设计规范决定，不是严格限定为 8 位。8 位只是支付行业中一个比较常见的标准，实际上，终端编号可以是9 位、10 位或其他长度，具体取决于以下几个因素：</p>
+<h3 id="1-支付系统或机构的规范"><a href="#1-支付系统或机构的规范" class="headerlink" title="1. 支付系统或机构的规范"></a>1. 支付系统或机构的规范</h3><p>每个支付系统、银行或支付服务提供商可能会根据他们的需求制定自己的终端编号规范。终端编号的位数并没有统一的全球标准，各个系统和地区的规定可能不同：</p>
+<p><strong>●</strong> 8 位 是常见的标准，因为它足够大可以唯一标识数以百万计的终端设备，并且简洁易记。</p>
+<p><strong>●</strong> 9 位、10 位甚至更长 的编号通常用于需要管理大量终端的复杂支付网络，如跨国支付系统、大型连锁店的支付终端等。</p>
+<h3 id="2-唯一性和设备数量的需求"><a href="#2-唯一性和设备数量的需求" class="headerlink" title="2. 唯一性和设备数量的需求"></a>2. 唯一性和设备数量的需求</h3><p>终端编号的主要功能是唯一标识每个支付终端。8 位数字提供了 1 亿（108&#x3D;100,000,00010^8 &#x3D; 100,000,000108&#x3D;100,000,000）种不同的组合，这对许多中小规模的支付网络来说是足够的。如果需要管理的终端数量超过 1 亿，支付系统可能会选择使用更多位数的终端编号，例如 9 位（10亿种组合）或 10 位（100亿种组合）。</p>
+<h3 id="3-地区或行业的标准化"><a href="#3-地区或行业的标准化" class="headerlink" title="3. 地区或行业的标准化"></a>3. 地区或行业的标准化</h3><p>在某些地区或行业中，可能会有特定的终端编号规范。某些标准化组织或支付网络可能推荐或要求使用某一固定长度的编号：</p>
+<p><strong>●</strong> 在一些国家或地区，支付终端编号可能会与银行、商户等其他标识符配合使用，因此可能会设计更长的编号（例如 9 位或 10 位），以适应业务的复杂性和扩展性。</p>
+<p><strong>●</strong> 例如，大型银行或跨国支付系统可能需要更长的编号来区分不同的国家、分支机构和商户。</p>
+<h3 id="4-系统兼容性和设计习惯"><a href="#4-系统兼容性和设计习惯" class="headerlink" title="4. 系统兼容性和设计习惯"></a>4. 系统兼容性和设计习惯</h3><p><strong>8 位终端编号</strong> 已经是许多支付系统中的惯例，很多系统和软件的设计都基于这一长度，因此在设计新系统时，遵循现有的设计习惯能够减少兼容性问题。</p>
+<p><strong>●</strong> 如果一个支付系统已经支持了 8 位终端编号，增加更多位数可能需要修改现有系统中的数据库结构、数据验证逻辑等，这涉及到兼容性和系统更新的问题。因此，许多系统选择保持使用 8 位。</p>
+<p><strong>●</strong> 然而，随着支付网络的扩展和技术的发展，某些系统可能会根据实际需求，使用 <strong>9 位</strong>、<strong>10 位</strong>甚至更多位数的终端编号。</p>
+<h3 id="5-未来扩展性"><a href="#5-未来扩展性" class="headerlink" title="5. 未来扩展性"></a>5. 未来扩展性</h3><p>   对于一些更大型的支付系统或未来扩展需求较大的网络，设计时可能会预留更多位数的编号，例如 10 位或更长，以便在未来增加更多的终端时无需重新设计编号系统。</p>
+<h3 id="6-编码的安全性与分层结构"><a href="#6-编码的安全性与分层结构" class="headerlink" title="6. 编码的安全性与分层结构"></a>6. 编码的安全性与分层结构</h3><p>某些支付系统可能会在终端编号中包含分层结构，例如：</p>
+<p><strong>● 前几位</strong>：可能表示区域、分支机构、商户号等信息。</p>
+<p><strong>● 后几位</strong>：唯一标识该商户或区域内的支付终端。</p>
+<p>这种分层结构可能需要更多位数的编号，特别是在大型跨国支付系统中，这样可以使编号更具扩展性和管理性。</p>
+<h2 id="总结：-1"><a href="#总结：-1" class="headerlink" title="总结："></a>总结：</h2><p>虽然 8 位 是很多支付系统中常见的终端编号长度，但没有技术限制必须是8位。支付系统可以根据实际的规模、唯一性需求、标准化、扩展性等因素使用 9 位、10 位甚至更长 的终端编号。因此，终端编号可以是 8 位、9 位、10 位或其他长度，具体取决于支付系统的设计需求和规范。</p>
+<h1 id="PKCS11填充方式"><a href="#PKCS11填充方式" class="headerlink" title="PKCS11填充方式"></a>PKCS11填充方式</h1><p>在 PKCS#11（Public-Key Cryptography Standards #11）标准中，填充方式（Padding） 是一种确保数据块符合加密算法要求的机制。PKCS#11 是一种应用程序接口（API），用于管理和执行密码操作，如密钥生成、加密、解密和数字签名。填充方式在加密时尤为重要，特别是在使用分组加密算法时，如 AES 和 DES。</p>
+<h2 id="1-PKCS-1-填充（用于-RSA-加密-x2F-签名）"><a href="#1-PKCS-1-填充（用于-RSA-加密-x2F-签名）" class="headerlink" title="1. PKCS#1 填充（用于 RSA 加密&#x2F;签名）"></a>1. PKCS#1 填充（用于 RSA 加密&#x2F;签名）</h2><p><strong>●</strong> PKCS#1 v1.5 填充通常用于 RSA 加密和签名操作。</p>
+<p><strong>●</strong> 主要用于非对称加密算法，如 RSA，确保输入数据符合固定长度要求。</p>
+<p><strong>●</strong> 在 PKCS#11 中，填充方式由 CKM_RSA_PKCS 机制定义。</p>
+<h3 id="工作原理："><a href="#工作原理：" class="headerlink" title="工作原理："></a>工作原理：</h3><p><strong>●</strong> 当数据块长度小于 RSA 模块大小时，填充额外的字节以确保输入数据长度与 RSA 模块相同。</p>
+<p><strong>●</strong> 对于加密：填充由随机数生成器生成的随机数据。</p>
+<p><strong>●</strong> 对于签名：填充是基于哈希值的结构化数据，确保签名消息的完整性和安全性。</p>
+<h2 id="2-PKCS-7-填充"><a href="#2-PKCS-7-填充" class="headerlink" title="2. PKCS#7 填充"></a>2. PKCS#7 填充</h2><p><strong>●</strong> PKCS#7 填充是一种常见的分组加密填充方式，主要用于对称加密算法如 AES 和 DES，用于确保数据长度是加密块的整数倍。</p>
+<p><strong>●</strong> PKCS#11 使用的分组加密算法通常需要 PKCS#7 填充来确保输入数据与算法要求的块大小相匹配。</p>
+<h3 id="工作原理：-1"><a href="#工作原理：-1" class="headerlink" title="工作原理："></a>工作原理：</h3><p><strong>●</strong> 每个块的大小通常是 8 字节或 16 字节，如果最后一个块的长度不足，则在最后一个块上填充数据。</p>
+<p><strong>●</strong> 填充的字节内容为填充的字节数。例如，如果最后需要填充 3 个字节，每个字节填充的值都是 0x03。</p>
+<h2 id="3-零填充（Zero-Padding）"><a href="#3-零填充（Zero-Padding）" class="headerlink" title="3. 零填充（Zero Padding）"></a>3. 零填充（Zero Padding）</h2><p><strong>●</strong> 零填充 也是一种常见的填充方式，通常用于一些对称加密算法，尤其是数据本身不包含尾随零时。</p>
+<p><strong>●</strong> 它通过在数据的末尾填充 0x00 字节来完成。</p>
+<h3 id="工作原理：-2"><a href="#工作原理：-2" class="headerlink" title="工作原理："></a>工作原理：</h3><p><strong>●</strong> 填充的数据为 0x00，直到最后一个块达到算法所要求的块大小。</p>
+<p><strong>●</strong> 适用于一些没有显式填充要求的分组加密模式。</p>
+<h2 id="4-OAEP-填充（Optimal-Asymmetric-Encryption-Padding，最优非对称加密填充）"><a href="#4-OAEP-填充（Optimal-Asymmetric-Encryption-Padding，最优非对称加密填充）" class="headerlink" title="4. OAEP 填充（Optimal Asymmetric Encryption Padding，最优非对称加密填充）"></a>4. OAEP 填充（Optimal Asymmetric Encryption Padding，最优非对称加密填充）</h2><p><strong>●</strong> OAEP 填充主要用于 RSA 加密，增强了安全性，避免了 PKCS#1 v1.5 中的某些弱点。</p>
+<p><strong>●</strong> 在 PKCS#11 中，填充方式由 CKM_RSA_PKCS_OAEP 机制定义。</p>
+<h3 id="工作原理：-3"><a href="#工作原理：-3" class="headerlink" title="工作原理："></a>工作原理：</h3><p><strong>●</strong> OAEP 是一种基于随机数和哈希函数的填充方式，用于增强 RSA 的安全性，防止某些已知的攻击，如选择密文攻击（CCA）。</p>
+<p><strong>●</strong> 该填充方式使用哈希函数（如 SHA-256）和伪随机数生成器来生成填充数据。</p>
+<h2 id="5-ISO-x2F-IEC-9797-填充（主要用于-MAC-操作）"><a href="#5-ISO-x2F-IEC-9797-填充（主要用于-MAC-操作）" class="headerlink" title="5. ISO&#x2F;IEC 9797 填充（主要用于 MAC 操作）"></a>5. ISO&#x2F;IEC 9797 填充（主要用于 MAC 操作）</h2><p><strong>●</strong> ISO 9797 是一种用于消息认证码（MAC）算法的填充标准。</p>
+<p><strong>●</strong> PKCS#11 中使用的 MAC 算法（如 DES 或 AES 的 MAC）可能依赖此填充标准。</p>
+<h3 id="工作原理：-4"><a href="#工作原理：-4" class="headerlink" title="工作原理："></a>工作原理：</h3><p><strong>●</strong> 该填充方式通过在消息末尾附加特定字节来使消息的长度符合块大小要求，确保消息认证码的计算完整性。</p>
+<h2 id="PKCS-11-中填充方式的选择"><a href="#PKCS-11-中填充方式的选择" class="headerlink" title="PKCS#11 中填充方式的选择"></a>PKCS#11 中填充方式的选择</h2><p>在 PKCS#11 中，填充方式通常是由加密机制指定的，常见的加密机制包括：</p>
+<p>1.CKM_RSA_PKCS：使用 PKCS#1 v1.5 填充方式，适用于 RSA 加密和签名。</p>
+<p>2.CKM_RSA_PKCS_OAEP：使用 OAEP 填充，适用于增强安全性的 RSA 加密。</p>
+<p>3.CKM_AES_CBC_PAD：AES 加密，采用 PKCS#7 填充方式。</p>
+<p>4.CKM_DES_CBC_PAD：DES 加密，采用 PKCS#7 填充方式。</p>
+<p>5.CKM_SHA256_RSA_PKCS：使用 SHA-256 和 PKCS#1 填充方式，适用于 RSA 签名。</p>
+<h2 id="填充方式的作用"><a href="#填充方式的作用" class="headerlink" title="填充方式的作用"></a>填充方式的作用</h2><p>1.确保块大小匹配：分组加密算法（如 AES 和 DES）要求输入数据的长度为算法的块大小（通常是 8 字节或 16 字节）的倍数。如果输入数据的长度不足以满足这个要求，填充会将数据扩展到适当的长度。</p>
+<p>2.防止明文结构泄漏：对于非对称加密（如 RSA），填充方式可以增加数据的随机性，防止攻击者通过已知明文的结构进行攻击。</p>
+<p>3.提高安全性：一些高级填充方式（如 OAEP）可以增强加密算法的安全性，防止某些特定类型的攻击。</p>
+<p><strong>如果数据块长度过长怎么办</strong></p>
+<p><strong>ChatGPT 说：</strong></p>
+<p>如果数据块的长度过长，通常会采取分块处理的方式进行处理，尤其是在使用分组加密算法时，如 AES、DES 等。这些算法对每个数据块进行加密，因此即使数据长度超过了单个块的大小，也可以通过分块加密的方式处理整个数据流。</p>
+<h1 id="处理数据块过长的常见方法："><a href="#处理数据块过长的常见方法：" class="headerlink" title="处理数据块过长的常见方法："></a>处理数据块过长的常见方法：</h1><h2 id="1-分组加密模式（Block-Cipher-Modes-of-Operation）"><a href="#1-分组加密模式（Block-Cipher-Modes-of-Operation）" class="headerlink" title="1. 分组加密模式（Block Cipher Modes of Operation）"></a>1. 分组加密模式（Block Cipher Modes of Operation）</h2><p>对于超出单个块大小的数据，分组加密算法通常采用不同的加密模式来处理这些多余的块。以下是几种常见的分组加密模式：</p>
+<h3 id="1-1-电子密码本模式（ECB-Electronic-Codebook）"><a href="#1-1-电子密码本模式（ECB-Electronic-Codebook）" class="headerlink" title="1.1 电子密码本模式（ECB - Electronic Codebook）"></a>1.1 电子密码本模式（ECB - Electronic Codebook）</h3><p><strong>●</strong> 工作原理：将明文分割成若干块，每块单独加密。每个数据块都被独立地加密为密文块。</p>
+<p><strong>●</strong> 问题：ECB 模式的主要问题是相同的明文块会加密为相同的密文块，这容易暴露明文的结构，导致安全性较低。因此，ECB 模式并不推荐用于大多数加密场景。</p>
+<h3 id="1-2-密码分组链接模式（CBC-Cipher-Block-Chaining）"><a href="#1-2-密码分组链接模式（CBC-Cipher-Block-Chaining）" class="headerlink" title="1.2 密码分组链接模式（CBC - Cipher Block Chaining）"></a>1.2 密码分组链接模式（CBC - Cipher Block Chaining）</h3><p><strong>●</strong> 工作原理：在 CBC 模式中，第一个明文块与一个初始化向量（IV）异或，然后加密。后续的每个明文块会与前一个密文块异或后再加密。</p>
+<p><strong>●</strong> 优点：即使相同的明文块，在不同上下文中的加密结果也会不同，增强了安全性。</p>
+<p><strong>●</strong> 过程：适用于处理长度超过单个块大小的明文。数据被分割为多个块，然后通过加密链的方式处理。</p>
+<h3 id="1-3-计数器模式（CTR-Counter-Mode）"><a href="#1-3-计数器模式（CTR-Counter-Mode）" class="headerlink" title="1.3 计数器模式（CTR - Counter Mode）"></a>1.3 计数器模式（CTR - Counter Mode）</h3><p><strong>●</strong> 工作原理：CTR 模式将明文块与一个计数器异或后加密。计数器每次加密都会递增，确保每个加密块的唯一性。</p>
+<p><strong>●</strong> 优点：CTR 模式具有并行化加密的能力，可以更高效地处理大数据块。</p>
+<p><strong>●</strong> 应用场景：适用于处理大文件或需要高性能的场景，如文件加密或网络数据流加密。</p>
+<h3 id="1-4-Galois-x2F-Counter模式（GCM-Galois-x2F-Counter-Mode）"><a href="#1-4-Galois-x2F-Counter模式（GCM-Galois-x2F-Counter-Mode）" class="headerlink" title="1.4 Galois&#x2F;Counter模式（GCM - Galois&#x2F;Counter Mode）"></a>1.4 Galois&#x2F;Counter模式（GCM - Galois&#x2F;Counter Mode）</h3><p><strong>●</strong> 工作原理：GCM 是 CTR 的一种变体，除了加密功能外，还提供了认证功能，确保加密数据的完整性和真实性。</p>
+<p><strong>●</strong> 优点：不仅能处理大块数据，还可以保证数据的完整性，适用于需要高安全性的场景。</p>
+<p><strong>●</strong> 应用场景：广泛应用于 SSL&#x2F;TLS 加密协议中，确保安全的网络通信。</p>
+<h2 id="2-流加密算法（Stream-Cipher）"><a href="#2-流加密算法（Stream-Cipher）" class="headerlink" title="2. 流加密算法（Stream Cipher）"></a>2. 流加密算法（Stream Cipher）</h2><p>如果数据块过长，也可以考虑使用流加密算法，如 RC4、ChaCha20 等，它们不基于块操作，而是将数据视为一个流进行逐字节或逐比特加密。</p>
+<p><strong>●</strong> 工作原理：流加密算法将数据作为一个连续的比特流进行加密，不需要进行分块。因此，数据长度越长，流加密算法的效率越能体现出来。</p>
+<p><strong>●</strong> 优点：对于长数据流加密较为高效，尤其适用于需要实时处理的场景。</p>
+<h2 id="3-分段处理"><a href="#3-分段处理" class="headerlink" title="3. 分段处理"></a>3. 分段处理</h2><p>如果数据块长度过长，可以将数据分段处理。加密算法会根据固定的块大小对数据进行分块，然后依次加密每个块。常见的块大小是 64 位或 128 位，具体长度取决于加密算法。</p>
+<p><strong>步骤：</strong></p>
+<p>1.分块：将数据按照加密算法的块大小进行分割（例如 AES 使用 128 位块，DES 使用 64 位块）。</p>
+<p>2.加密每个块：使用选定的加密模式（如 CBC、CTR 等）对每个块逐个进行加密。</p>
+<p>3.填充不足块：如果最后一块数据的长度不足一个完整块，则使用填充方式（如 PKCS#7 填充）填补数据。</p>
+<p>4.串联密文：最后，将加密的密文块按顺序串联在一起，形成完整的加密结果。</p>
+<h2 id="4-分段传输和分段解密"><a href="#4-分段传输和分段解密" class="headerlink" title="4. 分段传输和分段解密"></a>4. 分段传输和分段解密</h2><p>在传输长数据时，可以将数据分段加密，每个加密块单独传输或存储，然后在接收端进行分段解密。这种方法常用于以下场景：</p>
+<p><strong>●</strong> 大文件加密：当需要加密一个大文件时，可以将文件分成多个块逐步加密，每次处理一个块。</p>
+<p><strong>●</strong> 网络数据加密：对于需要通过网络传输的大量数据，可以将数据分块加密后传输，在接收端逐块解密。</p>
+<h2 id="5-填充模式与处理溢出"><a href="#5-填充模式与处理溢出" class="headerlink" title="5. 填充模式与处理溢出"></a>5. 填充模式与处理溢出</h2><p>如果数据块长度超过加密算法的块大小，并且不是块大小的整数倍，则可能需要填充剩余的数据，使其与加密算法的块大小匹配。常见的填充方式包括：</p>
+<p><strong>●</strong> PKCS#7 填充：常用于对称加密中的填充方式，数据不足时填充字节，使数据长度与块大小匹配。</p>
+<p><strong>●</strong> 零填充：在数据末尾用零值字节填充，直到块大小满足加密算法的要求。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>当数据块长度过长时，常见的处理方式包括：</strong></p>
+<p><strong>●</strong> 使用分组加密模式（如 CBC、CTR、GCM 等），对数据进行分块加密处理。</p>
+<p><strong>●</strong> 使用流加密算法，连续加密数据流，避免分块。</p>
+<p><strong>●</strong> 分段处理和分段传输，将大数据分块加密并依次传输或存储。</p>
+<p><strong>●</strong> 使用适当的填充方式，确保数据长度与加密算法的块大小匹配。</p>
+<p>通过这些方法，加密系统可以有效处理长度超过块大小的长数据，并确保数据加密的安全性和完整性。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://ddd887.github.io">是苹果啊</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://ddd887.github.io/archives/dd23fb4f.html">https://ddd887.github.io/archives/dd23fb4f.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://ddd887.github.io" target="_blank">是苹果啊</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%80%9D%E8%80%83%E4%B8%8E%E6%80%BB%E7%BB%93/">思考与总结</a></div><div class="post_share"><div class="social-share" data-image="https://pic.888888.al/i/2024/11/07/p2nb78.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://pic.888888.al/i/2023/08/15/sv49cq.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://pic.888888.al/i/2023/08/15/sv49cq.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://pic.888888.al/i/2023/08/15/sv7xxm.jpg" rel="external nofollow noreferrer" target="_blank"><img class="post-qr-code-img" src="https://pic.888888.al/i/2023/08/15/sv7xxm.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/archives/7432e8d4.html"><img class="next-cover" src="https://pic.888888.al/i/2024/11/06/rb9sy8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">安全合规工作的简单思考与总结</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/archives/7432e8d4.html" title="安全合规工作的简单思考与总结"><img class="cover" src="https://pic.888888.al/i/2024/11/06/rb9sy8.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-06</div><div class="title">安全合规工作的简单思考与总结</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://pic.888888.al/i/2023/08/15/qn7803.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">是苹果啊</div><div class="author-info__description">步履不停</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ddd887"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/ddd887" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:2301002710@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://pic.888888.al/i/2023/08/15/12khmuy.png" rel="external nofollow noreferrer" target="_blank" title="QQ"><i class="fa-brands fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">开心最重要！！！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%BC%96%E5%8F%B7"><span class="toc-number">1.</span> <span class="toc-text">终端编号</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%BC%96%E5%8F%B7%E7%9A%84%E5%B8%B8%E8%A7%81%E4%BD%8D%E6%95%B0%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">终端编号的常见位数：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E7%BC%96%E5%8F%B7%E7%9A%84%E6%9E%84%E6%88%90%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">终端编号的构成：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9A"><span class="toc-number">1.3.</span> <span class="toc-text">不同支付系统的情况：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">总结：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF8%E4%BD%8D%EF%BC%8C%E4%B8%8D%E5%8F%AF%E4%BB%A5%E6%98%AF9%E4%BD%8D%EF%BC%8C10%E4%BD%8D%E5%90%97"><span class="toc-number">1.5.</span> <span class="toc-text">为什么是8位，不可以是9位，10位吗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%94%AF%E4%BB%98%E7%B3%BB%E7%BB%9F%E6%88%96%E6%9C%BA%E6%9E%84%E7%9A%84%E8%A7%84%E8%8C%83"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 支付系统或机构的规范</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%94%AF%E4%B8%80%E6%80%A7%E5%92%8C%E8%AE%BE%E5%A4%87%E6%95%B0%E9%87%8F%E7%9A%84%E9%9C%80%E6%B1%82"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 唯一性和设备数量的需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%9C%B0%E5%8C%BA%E6%88%96%E8%A1%8C%E4%B8%9A%E7%9A%84%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.5.3.</span> <span class="toc-text">3. 地区或行业的标准化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B3%BB%E7%BB%9F%E5%85%BC%E5%AE%B9%E6%80%A7%E5%92%8C%E8%AE%BE%E8%AE%A1%E4%B9%A0%E6%83%AF"><span class="toc-number">1.5.4.</span> <span class="toc-text">4. 系统兼容性和设计习惯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9C%AA%E6%9D%A5%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-number">1.5.5.</span> <span class="toc-text">5. 未来扩展性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%BC%96%E7%A0%81%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E4%B8%8E%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.6.</span> <span class="toc-text">6. 编码的安全性与分层结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A-1"><span class="toc-number">1.6.</span> <span class="toc-text">总结：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PKCS11%E5%A1%AB%E5%85%85%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">PKCS11填充方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-PKCS-1-%E5%A1%AB%E5%85%85%EF%BC%88%E7%94%A8%E4%BA%8E-RSA-%E5%8A%A0%E5%AF%86-x2F-%E7%AD%BE%E5%90%8D%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">1. PKCS#1 填充（用于 RSA 加密&#x2F;签名）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">2.1.1.</span> <span class="toc-text">工作原理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-PKCS-7-%E5%A1%AB%E5%85%85"><span class="toc-number">2.2.</span> <span class="toc-text">2. PKCS#7 填充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">工作原理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%9B%B6%E5%A1%AB%E5%85%85%EF%BC%88Zero-Padding%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">3. 零填充（Zero Padding）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A-2"><span class="toc-number">2.3.1.</span> <span class="toc-text">工作原理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-OAEP-%E5%A1%AB%E5%85%85%EF%BC%88Optimal-Asymmetric-Encryption-Padding%EF%BC%8C%E6%9C%80%E4%BC%98%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%A1%AB%E5%85%85%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">4. OAEP 填充（Optimal Asymmetric Encryption Padding，最优非对称加密填充）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A-3"><span class="toc-number">2.4.1.</span> <span class="toc-text">工作原理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-ISO-x2F-IEC-9797-%E5%A1%AB%E5%85%85%EF%BC%88%E4%B8%BB%E8%A6%81%E7%94%A8%E4%BA%8E-MAC-%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-number">2.5.</span> <span class="toc-text">5. ISO&#x2F;IEC 9797 填充（主要用于 MAC 操作）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%EF%BC%9A-4"><span class="toc-number">2.5.1.</span> <span class="toc-text">工作原理：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PKCS-11-%E4%B8%AD%E5%A1%AB%E5%85%85%E6%96%B9%E5%BC%8F%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">2.6.</span> <span class="toc-text">PKCS#11 中填充方式的选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A1%AB%E5%85%85%E6%96%B9%E5%BC%8F%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.7.</span> <span class="toc-text">填充方式的作用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E5%9D%97%E8%BF%87%E9%95%BF%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">处理数据块过长的常见方法：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%88%86%E7%BB%84%E5%8A%A0%E5%AF%86%E6%A8%A1%E5%BC%8F%EF%BC%88Block-Cipher-Modes-of-Operation%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">1. 分组加密模式（Block Cipher Modes of Operation）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%94%B5%E5%AD%90%E5%AF%86%E7%A0%81%E6%9C%AC%E6%A8%A1%E5%BC%8F%EF%BC%88ECB-Electronic-Codebook%EF%BC%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">1.1 电子密码本模式（ECB - Electronic Codebook）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AF%86%E7%A0%81%E5%88%86%E7%BB%84%E9%93%BE%E6%8E%A5%E6%A8%A1%E5%BC%8F%EF%BC%88CBC-Cipher-Block-Chaining%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">1.2 密码分组链接模式（CBC - Cipher Block Chaining）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%AE%A1%E6%95%B0%E5%99%A8%E6%A8%A1%E5%BC%8F%EF%BC%88CTR-Counter-Mode%EF%BC%89"><span class="toc-number">3.1.3.</span> <span class="toc-text">1.3 计数器模式（CTR - Counter Mode）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Galois-x2F-Counter%E6%A8%A1%E5%BC%8F%EF%BC%88GCM-Galois-x2F-Counter-Mode%EF%BC%89"><span class="toc-number">3.1.4.</span> <span class="toc-text">1.4 Galois&#x2F;Counter模式（GCM - Galois&#x2F;Counter Mode）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B5%81%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%88Stream-Cipher%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">2. 流加密算法（Stream Cipher）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%88%86%E6%AE%B5%E5%A4%84%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">3. 分段处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%88%86%E6%AE%B5%E4%BC%A0%E8%BE%93%E5%92%8C%E5%88%86%E6%AE%B5%E8%A7%A3%E5%AF%86"><span class="toc-number">3.4.</span> <span class="toc-text">4. 分段传输和分段解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A1%AB%E5%85%85%E6%A8%A1%E5%BC%8F%E4%B8%8E%E5%A4%84%E7%90%86%E6%BA%A2%E5%87%BA"><span class="toc-number">3.5.</span> <span class="toc-text">5. 填充模式与处理溢出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.6.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/dd23fb4f.html" title="PKCS填充方式"><img src="https://pic.888888.al/i/2024/11/07/p2nb78.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PKCS填充方式"/></a><div class="content"><a class="title" href="/archives/dd23fb4f.html" title="PKCS填充方式">PKCS填充方式</a><time datetime="2024-11-07T06:20:48.206Z" title="发表于 2024-11-07 14:20:48">2024-11-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/7432e8d4.html" title="安全合规工作的简单思考与总结"><img src="https://pic.888888.al/i/2024/11/06/rb9sy8.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安全合规工作的简单思考与总结"/></a><div class="content"><a class="title" href="/archives/7432e8d4.html" title="安全合规工作的简单思考与总结">安全合规工作的简单思考与总结</a><time datetime="2024-11-06T08:34:56.994Z" title="发表于 2024-11-06 16:34:56">2024-11-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/afb5413b.html" title="KindEditor文件上传漏洞"><img src="https://pic.888888.al/i/2023/08/15/11byltz.jfif" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="KindEditor文件上传漏洞"/></a><div class="content"><a class="title" href="/archives/afb5413b.html" title="KindEditor文件上传漏洞">KindEditor文件上传漏洞</a><time datetime="2023-08-15T14:47:15.977Z" title="发表于 2023-08-15 22:47:15">2023-08-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/5a428c68.html" title="JAVA反序列化漏洞基础"><img src="https://pic.888888.al/i/2023/08/15/10yo3t9.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JAVA反序列化漏洞基础"/></a><div class="content"><a class="title" href="/archives/5a428c68.html" title="JAVA反序列化漏洞基础">JAVA反序列化漏洞基础</a><time datetime="2023-04-23T13:00:50.304Z" title="发表于 2023-04-23 21:00:50">2023-04-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/c0777afa.html" title="Kerberos协议详解（转载）"><img src="https://pic.888888.al/i/2023/08/15/10sg7xc.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kerberos协议详解（转载）"/></a><div class="content"><a class="title" href="/archives/c0777afa.html" title="Kerberos协议详解（转载）">Kerberos协议详解（转载）</a><time datetime="2023-03-18T06:35:51.221Z" title="发表于 2023-03-18 14:35:51">2023-03-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020d - 2024 By 是苹果啊</div><div class="footer_custom_text">到底啦，真的没有了😤</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
